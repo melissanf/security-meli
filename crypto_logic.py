@@ -37,16 +37,7 @@ DEFAULT_ARABIC_FREQUENCY = {
 
 
 def calculate_frequency(text, return_counts=False):
-    """
-    Calcule la fréquence d'apparition de chaque lettre arabe dans le texte.
 
-    Args:
-        text (str): Le texte arabe à analyser
-        return_counts (bool): Si True, retourne aussi les comptages
-
-    Returns:
-        dict: Dictionnaire avec les fréquences (et comptages si demandé)
-    """
     cleaned_text = clean_arabic_text(text)
 
     if not cleaned_text:
@@ -184,10 +175,6 @@ def attack_substitution_frequency(ciphertext, reference_freq=None, num_candidate
 
 
 def is_invertible(a, n=28):
-    """
-    Vérifie si a est inversible modulo n (pour le chiffre affine).
-    a est inversible si pgcd(a, n) = 1.
-    """
     from math import gcd
 
     return gcd(a, n) == 1

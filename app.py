@@ -15,13 +15,11 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB max file size
 
 @app.route("/")
 def index():
-    """Affiche la page d'accueil."""
     return render_template("index.html")
 
 
 @app.route("/api/analyze", methods=["POST"])
 def analyze_text():
-    """Endpoint pour analyser un texte."""
     try:
         data = request.get_json()
         text = data.get("text", "")
@@ -29,20 +27,17 @@ def analyze_text():
         if not text.strip():
             return jsonify({"error": "Le texte ne peut pas être vide"}), 400
 
-        # Calculer les fréquences
         freq_data: Any = calculate_frequency(text, return_counts=True)
         assert isinstance(freq_data, dict)
         frequencies: Dict = freq_data.get("frequencies", {})
         counts: Dict = freq_data.get("counts", {})
         total: int = freq_data.get("total", 0)
 
-        # Obtenir les infos du texte
         text_info = get_text_info(text)
 
-        # Préparer les résultats
         freq_sorted = sorted(frequencies.items(), key=lambda x: x[1], reverse=True)
 
-        # Top 10 lettres
+      
         top_letters = [
             {
                 "letter": letter,
@@ -68,7 +63,6 @@ def analyze_text():
 
 @app.route("/api/attack", methods=["POST"])
 def attack_cipher():
-    """Endpoint pour attaquer un chiffrement."""
     try:
         data = request.get_json()
         ciphertext = data.get("ciphertext", "")
@@ -187,7 +181,6 @@ def get_example():
 
 @app.route("/api/reference-frequency", methods=["GET"])
 def get_reference_frequency():
-    """Retourne le tableau de fréquence de référence."""
     freq_sorted = sorted(
         DEFAULT_ARABIC_FREQUENCY.items(), key=lambda x: x[1], reverse=True
     )
@@ -202,13 +195,11 @@ def get_reference_frequency():
 
 @app.errorhandler(404)
 def not_found(error):
-    """Gère les erreurs 404."""
     return jsonify({"error": "Endpoint non trouvé"}), 404
 
 
 @app.errorhandler(500)
 def server_error(error):
-    """Gère les erreurs serveur."""
     return jsonify({"error": "Erreur serveur"}), 500
 
 

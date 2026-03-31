@@ -1,7 +1,3 @@
-"""
-Utilitaires pour le traitement du texte arabe
-Responsable du nettoyage, normalisation et traitement Unicode
-"""
 
 import unicodedata
 import re
@@ -43,15 +39,7 @@ ARABIC_LETTER_VARIANTS = {
 
 
 def remove_diacritics(text):
-    """
-    Supprime tous les signes de diacritique (Tashkeel) du texte arabe.
-    
-    Args:
-        text (str): Le texte arabe avec diacritiques
-        
-    Returns:
-        str: Le texte sans diacritiques
-    """
+
     # Supprimer tous les diacritiques
     for diacritic in ARABIC_DIACRITICS:
         text = text.replace(diacritic, '')
@@ -63,16 +51,7 @@ def remove_diacritics(text):
 
 
 def normalize_arabic_letters(text):
-    """
-    Normalise les variantes de lettres arabes en leurs formes de base.
-    Par exemple: ة -> ه, ى -> ا, etc.
-    
-    Args:
-        text (str): Le texte avec variantes
-        
-    Returns:
-        str: Le texte normalisé
-    """
+
     for variant, base in ARABIC_LETTER_VARIANTS.items():
         text = text.replace(variant, base)
     
@@ -86,14 +65,7 @@ def clean_arabic_text(text):
     2. Normalise les variantes de lettres
     3. Supprime les espaces superflus
     4. Convertit en minuscules (s'il y a)
-    5. Garde uniquement les lettres arabes
-    
-    Args:
-        text (str): Le texte brut
-        
-    Returns:
-        str: Le texte nettoyé contenant uniquement des lettres arabes
-    """
+    5. Garde uniquement les lettres arabes """
     # Supprimer les diacritiques
     text = remove_diacritics(text)
     
@@ -110,12 +82,6 @@ def clean_arabic_text(text):
 def is_arabic_text(text):
     """
     Vérifie si le texte contient des caractères arabes.
-    
-    Args:
-        text (str): Le texte à vérifier
-        
-    Returns:
-        bool: True si le texte contient au moins une lettre arabe
     """
     arabic_pattern = re.compile(r'[\u0600-\u06FF]')
     return bool(arabic_pattern.search(text))
@@ -124,12 +90,6 @@ def is_arabic_text(text):
 def get_text_info(text):
     """
     Retourne des informations sur le texte arabe.
-    
-    Args:
-        text (str): Le texte à analyser
-        
-    Returns:
-        dict: Dictionnaire avec des statistiques
     """
     cleaned = clean_arabic_text(text)
     return {
